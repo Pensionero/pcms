@@ -1,0 +1,17 @@
+{
+    "name": "spm67/cms",
+    "description": "For cms",
+    "authors": [{
+        "name": "Pems Pemsovich",
+        "email": "Pems55@yandex.ru"
+    }],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Engine\\": "engine",
+            "Engine\\DI\\": "engine/DI"
+
+        }
+    }
+
+}

@@ -33,15 +33,29 @@ class Cms
    */
    public function run()
    {
-      $this->router->add('home', '/', 'HomeController:index');
-      $this->router->add('news', '/news', 'HomeController:news');
-      $routerDispatch = $this->router->dispatch(Common::getMethod(), Common::getPathUrl());
+      try{
+         $this->router->add('home', '/', 'HomeController:index');
+         $this->router->add('news', '/news', 'HomeController:news');
+         $routerDispatch = $this->router->dispatch(Common::getMethod(), Common::getPathUrl());
+   
+         if ($routerDispatch == null) {
+            $routerDispatch = new DispatchedRoute('ErrorController:page404');
+        }
+   
+         list($class, $action) = explode(':', $routerDispatch->getController(), 2);
+   
+        // $controller = '\\' . ENV . '\\Controller\\' . $class;
+        $controller = '\\Cms\\Controller\\' . $class;
+        $parameters = $routerDispatch->getParameters();
 
-      list($class, $action) = explode(':', $routerDispatch->getController(), 2);
+        call_user_func_array([new $controller($this->di), $action], $parameters);
 
-     // $controller = '\\' . ENV . '\\Controller\\' . $class;
-     $controller = '\\Cms\\Controller\\' . $class;
-      call_user_func_array([new $controller($this->di), $action], $routerDispatch->getParameters());
+      }catch(\Exception $e){
+
+         echo $e->getMessage();
+         exit;
+     }
+      
     //  $routerDispatch = $this->router->dispatch(Common::getMethod(), Common::getpathUrl());
     //  print_r($this->di);
    // print_r($_SERVER);

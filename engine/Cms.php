@@ -36,6 +36,8 @@ class Cms
       try{
          $this->router->add('home', '/', 'HomeController:index');
          $this->router->add('news', '/news', 'HomeController:news');
+         $this->router->add('news_single', '/news/(id:int)', 'HomeController:news');
+
          $routerDispatch = $this->router->dispatch(Common::getMethod(), Common::getPathUrl());
    
          if ($routerDispatch == null) {
@@ -56,14 +58,6 @@ class Cms
          exit;
      }
       
-    //  $routerDispatch = $this->router->dispatch(Common::getMethod(), Common::getpathUrl());
-    //  print_r($this->di);
-   // print_r($_SERVER);
-    //  print_r($class);
-    //  echo '<br>';
-    //  print_r($action); 
-   //  echo Common::getpathUrl();
-    // echo Common::getMethod();
    }
 
 }
